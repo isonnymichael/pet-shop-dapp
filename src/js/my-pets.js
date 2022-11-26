@@ -1,6 +1,7 @@
 App = {
     web3Provider: null,
     contracts: {},
+    account: '',
   
     init: async function() {
   
@@ -39,6 +40,15 @@ App = {
   
         App.contracts.Adoption.setProvider(App.web3Provider);
   
+        web3.eth.getAccounts(function(error, accounts) {
+          if (error) {
+            console.log(error);
+          }
+
+          App.account = accounts[0];
+
+        });
+
         return App.myAdopted();
       });
   
@@ -59,7 +69,7 @@ App = {
 
             for (i = 0; i < data.length; i ++) {
 
-                if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
+                if (adopters[i] !== '0x0000000000000000000000000000000000000000' && App.account == adopters[i]) {
                     petTemplate.find('.panel-title').text(data[i].name);
                     petTemplate.find('img').attr('src', data[i].picture);
                     petTemplate.find('.pet-breed').text(data[i].breed);
@@ -102,6 +112,7 @@ App = {
         }).catch(function(err) {
           console.log(err.message);
         });
+        
       });
     }
   

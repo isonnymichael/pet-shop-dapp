@@ -70,10 +70,10 @@ App = {
 
     App.contracts.Adoption.deployed().then(function(instance) {
       adoptionInstance = instance;
-
+     
       return adoptionInstance.getAdopters.call();
     }).then(function(adopters) {
-
+      console.log(adopters);
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
           $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
